@@ -7,7 +7,7 @@ function getSeed():number{
 
 
 export function getDailyNumber(max: number, jogo: number) : number{
-    const seed = getSeed() + jogo; 
+    const seed = getSeed() + jogo * 14749; 
 
     // seno fica entre -1 e 1
     const x = Math.sin(seed) *  10000;
@@ -18,6 +18,7 @@ export function getDailyNumber(max: number, jogo: number) : number{
     // -5150.380749 - (-5151) = 0.6192509999999992
 
 
+    console.log(`${seed} - ${x} - ${randomNumber} - ${Math.floor(randomNumber * max)}`);
     // randomNumber serve como uma "porcentagem" do total de itens a serem escolhidos.
     // aí floor pega o debaixo para garantir que esteja dentro do numero max
     return Math.floor(randomNumber * max);

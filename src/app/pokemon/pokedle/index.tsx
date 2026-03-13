@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
+import { Button } from "@/components/button";
+import { Input } from "@/components/input";
+import { PokedleRow } from "@/components/pokedleRow";
 import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
-import { PokedleRow } from "@/components/pokedleRow";
 import { styles } from "./styles";
-import { Input } from "@/components/input";
-import { Button } from "@/components/button"
 
 
 export default function Pokedle(){
@@ -26,7 +26,7 @@ export default function Pokedle(){
             try {
 
                 const data = await getDailyPokemonList();
-                setDailyPokemon(data[4]);
+                setDailyPokemon(data[0]);
 
             } catch (e) {
                 console.error(e);
