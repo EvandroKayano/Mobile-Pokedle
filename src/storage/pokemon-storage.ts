@@ -1,14 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchPokemon } from "@/services/dailyPokemon";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const POKEMON_STORAGE_KEY = "pokemon-storage"
 
 export type PokemonStorage = {
     id: number,
     name: string,
-    height: number,
-    weight: number,
     generation: string,
     color: string,
     type1: string,
@@ -18,6 +15,8 @@ export type PokemonStorage = {
     is_legendary: boolean,
     is_mythical: boolean,
     shape: string,
+    height: number,
+    weight: number,
     sprite: string
 };
 

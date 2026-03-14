@@ -1,7 +1,12 @@
-import { getDailyNumber } from "@/utils/dailySeed";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
+import { getDailyNumber } from "@/utils/dailySeed";
 
 export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage | null>{
+
+  if( typeof valor === "string" && valor.toLowerCase() === "mimikyu"){
+    valor = "778"
+  }
+  
   const pokemonRes = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${valor}`
   );
@@ -15,26 +20,74 @@ export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage
     return null;
   }
 
-  const pokemon = await pokemonRes.json();
+  const pokemonInfo = await pokemonRes.json();
   const species = await speciesRes.json();
 
+  return refinePokemonData(pokemonInfo,species);
+}
 
-  return {
-    id: pokemon.id,
-    name: pokemon.name,
-    height: pokemon.height,
-    weight: pokemon.weight,
-    generation: species.generation?.name || "unknown",
+function refinePokemonData(pokemonInfo:any, species:any):PokemonStorage{
+  let GEN : string;
+  switch(species.generation.name){
+    case "generation-i":
+      GEN = "Kanto"
+      break;
+    case "generation-ii":
+      GEN = "Johto"
+      break;
+    case "generation-iii":
+      GEN = "Hoenn"
+      break;
+    case "generation-iv":
+      GEN = "Sinnoh"
+      break;
+    case "generation-v":
+      GEN = "Unova"
+      break;
+    case "generation-vi":
+      GEN = "Kalos"
+      break;
+    case "generation-vii":
+      GEN = "Alola"
+      break;
+    case "generation-viii":
+      if(species.pokedex_numbers[1].name == "hisui")
+        GEN = "Hisui"
+      else 
+        GEN = "Galar"
+      break;
+    case "generation-ix":
+      GEN = "Paldea"
+      break;
+    case "generation-x":
+      GEN = ""
+      break;
+    case "generation-xi":
+      GEN = ""
+      break;
+    default:
+      GEN = "";
+      break;
+  }
+
+  const refinedPokemon : PokemonStorage ={
+    id: pokemonInfo.id,
+    name: pokemonInfo.name,
+    height: pokemonInfo.height,
+    weight: pokemonInfo.weight,
+    generation: GEN,
     color: species.color?.name || "unknown",
-    type1:pokemon.types[0].type.name,
-    type2: pokemon.types[1]?.type.name || undefined,
-    habitat: species.habitat?.name || "unknown",
+    type1: pokemonInfo.types[0].type.name,
+    type2: pokemonInfo.types[1]?.type.name || "N/A",
+    habitat: species.habitat?.name || "Unknown",
     is_baby: species.is_baby,
     is_legendary: species.is_legendary,
     is_mythical: species.is_mythical,
-    shape: species.shape?.name || "unknown",
-    sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+    shape: species.shape?.name || "Unknown",
+    sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo.id}.png`
   };
+
+  return refinedPokemon;
 }
 
 export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
@@ -55,4 +108,9 @@ export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
     console.log(ids);
 
     return result.filter(pkm => pkm != null) as PokemonStorage[];
+}
+
+function captalize(value: string): string {
+  if (!value) return value;
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }

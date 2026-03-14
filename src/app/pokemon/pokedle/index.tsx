@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, View } from "react-native";
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { PokedleRow } from "@/components/pokedleRow";
+import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";
@@ -11,20 +12,45 @@ import { styles } from "./styles";
 
 export default function Pokedle(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
-    const [loading, setLoading] = useState(true);
     const [pokemonGuess, setPokemonGuess] = useState('');
+    const [guessList, setGuessList] = useState<[PokemonStorage, RESULT[]][]>([[dailyPokemon,[RESULT.HIGHER]]]);
+    //const [pokedleResult, setPokedleResult] = useState<[PokemonStorage, RESULT[]] >();
+    const [loading, setLoading] = useState(true);
 
     async function handleGuess(){
-        let guess = await pokemonStorage.getByIdOrName(pokemonGuess);
+        let guess = await pokemonStorage.getByIdOrName(pokemonGuess.toLowerCase());
+        
+        if(guess){
+            const list : [PokemonStorage, RESULT[]] [] = [];
+            //list.push(guess);
+            //setGuessList(list);
+
+            const resultList = compareGuessToDaily(guess,dailyPokemon);
+            console.log(resultList);
+            // transformar em uma tupla [PokemonStorage, Comparison]
+            list.push([guess, resultList])
+            
+            //setPokedleResult(list)
+            setGuessList(list)
+            setPokemonGuess("");
+        }
     }
-
-
-
+    /*
+    const resetarBancoDeDados = async () => {
+        try {
+            await AsyncStorage.removeItem("pokemon-cache");
+            await AsyncStorage.clear();
+            console.log("BD apagado");
+            alert("Cache limpo! Reinicie o app.");
+        } catch (error) {
+            console.error("Erro ao limpar cache", error);
+        }
+    }
+    */
 
     useEffect(() => {
-        async function testStorage() {
+        async function loadStorage() {
             try {
-
                 const data = await getDailyPokemonList();
                 setDailyPokemon(data[0]);
 
@@ -34,7 +60,7 @@ export default function Pokedle(){
                 setLoading(false);
             }
         }
-        testStorage();
+        loadStorage();
     }, []);
 
     if (loading) return <ActivityIndicator size="large" style={{ flex: 1 }} />;
@@ -42,10 +68,14 @@ export default function Pokedle(){
     return (
         <View style={styles.container}> 
             <View style = {styles.inputContainer}>
-                <Input placeholder="Insert a pokemon name" autoCorrect={false} onChangeText={setPokemonGuess}/>
+                <Input placeholder="Insert a pokemon name" autoCorrect={false} onChangeText={setPokemonGuess} value={pokemonGuess}/>
                 <Button title="Guess" onPress={handleGuess} />
             </View>
-
+            {/*
+                <View style={{ flex: 1, padding: 20 }}>
+                    <Button title="[DEV] Resetar Banco" onPress={resetarBancoDeDados} />
+                </View>
+            */} 
             <FlatList
                 data={[dailyPokemon]}
                 showsHorizontalScrollIndicator={true}
@@ -57,6 +87,20 @@ export default function Pokedle(){
                 )}
                 
             />
+            
+            <FlatList
+                data={guessList}
+                showsHorizontalScrollIndicator={true}
+                style={styles.row} 
+                keyExtractor={item => String(item?.[0].id)}
+
+                renderItem={({ item }) => (   
+                    <PokedleRow pokemon={item[0]}/>
+                )}
+                
+            />
+            {/*
+            */}
         </View>
     );
 }

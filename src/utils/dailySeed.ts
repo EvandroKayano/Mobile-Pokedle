@@ -17,8 +17,6 @@ export function getDailyNumber(max: number, jogo: number) : number{
     // x - (parte inteira de x, pra baixo) = resto
     // -5150.380749 - (-5151) = 0.6192509999999992
 
-
-    console.log(`${seed} - ${x} - ${randomNumber} - ${Math.floor(randomNumber * max)}`);
     // randomNumber serve como uma "porcentagem" do total de itens a serem escolhidos.
     // aí floor pega o debaixo para garantir que esteja dentro do numero max
     return Math.floor(randomNumber * max);
