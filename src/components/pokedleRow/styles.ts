@@ -17,7 +17,24 @@ export const styles = StyleSheet.create({
         borderColor: "black",
         overflow: "hidden",
     },
-    stats:{ 
+    noneSprite:{
+        width: 75, 
+        height: 75, 
+        backgroundColor: colors.gray[300],
+    },
+    noneOuterSprite:{
+        width: 100, 
+        height: 100,
+        marginBottom: 5,
+        borderRadius: 15,
+        borderWidth: 5,
+        borderColor: "black",
+        overflow: "hidden",
+        backgroundColor: colors.gray[300],
+        justifyContent: 'center', 
+        alignItems: 'center',
+    },
+    statsRight:{ 
         fontWeight: 'bold',
         marginBottom: 5,
         borderRadius: 15,
@@ -28,6 +45,34 @@ export const styles = StyleSheet.create({
         height: 100, 
         textAlign: "center",
         textAlignVertical: "center",
-        backgroundColor: colors.gray[300],
+        backgroundColor: 'rgba(0, 255, 0, 0.6)',
     },
+    statsWrong:{
+        fontWeight: 'bold',
+        marginBottom: 5,
+        borderRadius: 15,
+        borderWidth: 5,
+        borderColor: "black",
+        overflow: "hidden",
+        width: 100, 
+        height: 100, 
+        textAlign: "center",
+        textAlignVertical: "center",
+        backgroundColor: 'rgba(255, 0, 0, 0.6)',
+    },
+    backgroundImage:{
+        position: "absolute",
+        height: 95,
+        width: 100,
+        opacity: 0.5,
+    },
+    highLowBlock:{
+        justifyContent: "center",
+    },
+    nothing:{
+        position: "absolute",
+        height: 95,
+        width: 100,
+        opacity: 0.0,
+    }
 });

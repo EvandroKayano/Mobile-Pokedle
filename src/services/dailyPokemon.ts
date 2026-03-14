@@ -78,7 +78,7 @@ function refinePokemonData(pokemonInfo:any, species:any):PokemonStorage{
     generation: GEN,
     color: species.color?.name || "unknown",
     type1: pokemonInfo.types[0].type.name,
-    type2: pokemonInfo.types[1]?.type.name || "N/A",
+    type2: pokemonInfo.types[1]?.type.name || "none",
     habitat: species.habitat?.name || "Unknown",
     is_baby: species.is_baby,
     is_legendary: species.is_legendary,

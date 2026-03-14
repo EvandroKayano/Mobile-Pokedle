@@ -1,0 +1,21 @@
+export const pkmTypes: Record<string,any> = {
+    bug: require('@/assets/images/pkm_types/bug.png'),
+    dark: require('@/assets/images/pkm_types/dark.png'),
+    dragon: require('@/assets/images/pkm_types/dragon.png'),
+    electric: require('@/assets/images/pkm_types/electric.png'),
+    fairy: require('@/assets/images/pkm_types/fairy.png'),
+    fighting: require('@/assets/images/pkm_types/fighting.png'),
+    fire: require('@/assets/images/pkm_types/fire.png'),
+    flying: require('@/assets/images/pkm_types/flying.png'),
+    ghost: require('@/assets/images/pkm_types/ghost.png'),
+    grass: require('@/assets/images/pkm_types/grass.png'),
+    ground: require('@/assets/images/pkm_types/ground.png'),
+    ice: require('@/assets/images/pkm_types/ice.png'),
+    normal: require('@/assets/images/pkm_types/normal.png'),
+    poison: require('@/assets/images/pkm_types/poison.png'),
+    psychic: require('@/assets/images/pkm_types/psychic.png'),
+    rock: require('@/assets/images/pkm_types/rock.png'),
+    steel: require('@/assets/images/pkm_types/steel.png'),
+    water: require('@/assets/images/pkm_types/water.png'),
+    none: require('@/assets/images/pkm_types/none.png')
+}

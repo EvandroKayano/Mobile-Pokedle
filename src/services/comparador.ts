@@ -23,33 +23,33 @@ export function compareGuessToDaily(guess:any, todays:any) : RESULT[] {
             }
             return appraisal;
         }
-        //type1
+        //type1 0
         if(guessed.type1 == daily.type1) appraisal.push(RESULT.RIGHT)
         else if(guessed.type1 == daily.type2) appraisal.push(RESULT.WRONG_SPOT)
         else appraisal.push(RESULT.WRONG_ANSWER)
-        //type2
+        //type2 1
         if(guessed.type2 == daily.type2) appraisal.push(RESULT.RIGHT)
         else if(guessed.type2 == daily.type1) appraisal.push(RESULT.WRONG_SPOT)
         else appraisal.push(RESULT.WRONG_ANSWER)
-        //habitat
+        //habitat 2
         appraisal.push (guessed.habitat === daily.habitat ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //color
+        //color 3
         appraisal.push (guessed.color === daily.color ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //legendary,mythical,baby
+        //legendary,mythical,baby 4
         const isCorrect = 
         guessed.is_baby         === daily.is_baby       &&
         guessed.is_legendary    === daily.is_legendary  &&
         guessed.is_mythical     === daily.is_mythical;
         appraisal.push(isCorrect ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //gen
+        //gen 5
         appraisal.push (guessed.generation === daily.generation ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //shape
+        //shape 6
         appraisal.push (guessed.shape === daily.shape ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //height
+        //height 7 
         if(guessed.height > daily.height) appraisal.push(RESULT.LOWER)          // o pokemon é mais baixo
         else if (guessed.height < daily.height) appraisal.push(RESULT.HIGHER)   // o pokemon é mais alto
         else appraisal.push(RESULT.RIGHT)
-        //weight
+        //weight 8
         if(guessed.weight > daily.weight) appraisal.push(RESULT.LOWER)          // o pokemon é mais baixo
         else if (guessed.weight < daily.weight) appraisal.push(RESULT.HIGHER)   // o pokemon é mais alto
         else appraisal.push(RESULT.RIGHT)

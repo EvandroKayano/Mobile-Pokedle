@@ -12,26 +12,30 @@ import { styles } from "./styles";
 
 export default function Pokedle(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
+    
     const [pokemonGuess, setPokemonGuess] = useState('');
-    const [guessList, setGuessList] = useState<[PokemonStorage, RESULT[]][]>([[dailyPokemon,[RESULT.HIGHER]]]);
-    //const [pokedleResult, setPokedleResult] = useState<[PokemonStorage, RESULT[]] >();
+    const [guessList, setGuessList] = useState<PokemonStorage[]>("" as unknown as PokemonStorage[]);
+    const [pokedleResult, setPokedleResult] = useState<RESULT[]>("" as unknown as RESULT[]);
+    const [resultList, setResultList] = useState<RESULT[][]>("" as unknown as RESULT[][]);
+
     const [loading, setLoading] = useState(true);
 
     async function handleGuess(){
         let guess = await pokemonStorage.getByIdOrName(pokemonGuess.toLowerCase());
         
         if(guess){
-            const list : [PokemonStorage, RESULT[]] [] = [];
-            //list.push(guess);
-            //setGuessList(list);
+            const list : PokemonStorage[] = [...guessList];
+            list.push(guess);
+            setGuessList(list);
 
-            const resultList = compareGuessToDaily(guess,dailyPokemon);
-            console.log(resultList);
-            // transformar em uma tupla [PokemonStorage, Comparison]
-            list.push([guess, resultList])
+            const appraise = compareGuessToDaily(guess,dailyPokemon);
+            console.log(appraise);
+
             
-            //setPokedleResult(list)
-            setGuessList(list)
+            const resultados : RESULT[][] = [...resultList];
+            resultados.push(appraise)
+
+            setPokedleResult(appraise)
             setPokemonGuess("");
         }
     }
@@ -80,10 +84,11 @@ export default function Pokedle(){
                 data={[dailyPokemon]}
                 showsHorizontalScrollIndicator={true}
                 style={styles.row} 
-                keyExtractor={item => String(item?.id)}
 
-                renderItem={({ item }) => (   
-                    <PokedleRow pokemon={item}/>
+                keyExtractor={ item => String(item?.id) }
+
+                renderItem={({ item, index }) => (   
+                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={pokedleResult}/>
                 )}
                 
             />
@@ -92,10 +97,10 @@ export default function Pokedle(){
                 data={guessList}
                 showsHorizontalScrollIndicator={true}
                 style={styles.row} 
-                keyExtractor={item => String(item?.[0].id)}
+                keyExtractor={item => String(item?.id)}
 
                 renderItem={({ item }) => (   
-                    <PokedleRow pokemon={item[0]}/>
+                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={pokedleResult}/>
                 )}
                 
             />
