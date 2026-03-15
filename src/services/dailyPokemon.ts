@@ -105,7 +105,7 @@ export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
     )
     const result = await Promise.all(promises);
 
-    console.log(ids);
+    //console.log(ids);
 
     return result.filter(pkm => pkm != null) as PokemonStorage[];
 }

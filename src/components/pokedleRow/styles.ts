@@ -20,7 +20,8 @@ export const styles = StyleSheet.create({
     noneSprite:{
         width: 75, 
         height: 75, 
-        backgroundColor: colors.gray[300],
+        justifyContent: 'center', 
+        alignItems: 'center',
     },
     noneOuterSprite:{
         width: 100, 
@@ -33,6 +34,14 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.gray[300],
         justifyContent: 'center', 
         alignItems: 'center',
+    },
+    wrongSpot:{
+        backgroundColor: "#ffff00",
+    },
+
+
+    highLowBlock:{
+        justifyContent: "center",
     },
     statsRight:{ 
         fontWeight: 'bold',
@@ -64,10 +73,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         height: 95,
         width: 100,
-        opacity: 0.5,
-    },
-    highLowBlock:{
-        justifyContent: "center",
+        opacity: 0.65,
     },
     nothing:{
         position: "absolute",

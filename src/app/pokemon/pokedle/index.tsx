@@ -14,16 +14,21 @@ export default function Pokedle(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
     
     const [pokemonGuess, setPokemonGuess] = useState('');
-    const [guessList, setGuessList] = useState<PokemonStorage[]>("" as unknown as PokemonStorage[]);
-    const [pokedleResult, setPokedleResult] = useState<RESULT[]>("" as unknown as RESULT[]);
-    const [resultList, setResultList] = useState<RESULT[][]>("" as unknown as RESULT[][]);
+    const [guessList, setGuessList] = useState<PokemonStorage[]>([]);
+    const [pokedleResult, setPokedleResult] = useState<RESULT[]>([]);
+    const [resultList, setResultList] = useState<RESULT[][]>([]);
 
     const [loading, setLoading] = useState(true);
+
+    let nGuesses : number;
 
     async function handleGuess(){
         let guess = await pokemonStorage.getByIdOrName(pokemonGuess.toLowerCase());
         
         if(guess){
+            //nGuesses+=1;
+
+            // lista de guesses de pokemon  
             const list : PokemonStorage[] = [...guessList];
             list.push(guess);
             setGuessList(list);
@@ -31,11 +36,11 @@ export default function Pokedle(){
             const appraise = compareGuessToDaily(guess,dailyPokemon);
             console.log(appraise);
 
-            
+            // lista de resultados na ordem de guesses
             const resultados : RESULT[][] = [...resultList];
             resultados.push(appraise)
+            setResultList(resultados)
 
-            setPokedleResult(appraise)
             setPokemonGuess("");
         }
     }
@@ -75,32 +80,34 @@ export default function Pokedle(){
                 <Input placeholder="Insert a pokemon name" autoCorrect={false} onChangeText={setPokemonGuess} value={pokemonGuess}/>
                 <Button title="Guess" onPress={handleGuess} />
             </View>
+
             {/*
                 <View style={{ flex: 1, padding: 20 }}>
                     <Button title="[DEV] Resetar Banco" onPress={resetarBancoDeDados} />
                 </View>
-            */} 
+           
             <FlatList
                 data={[dailyPokemon]}
                 showsHorizontalScrollIndicator={true}
                 style={styles.row} 
 
-                keyExtractor={ item => String(item?.id) }
+                keyExtractor={ (item, index) => `${item.id}-${index}` }
 
                 renderItem={({ item, index }) => (   
-                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={pokedleResult}/>
+                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={resultList[index]}/>
                 )}
                 
             />
+            */}  
             
             <FlatList
                 data={guessList}
                 showsHorizontalScrollIndicator={true}
                 style={styles.row} 
-                keyExtractor={item => String(item?.id)}
+                keyExtractor={ (item, index) => `${item.id}-${index}` }
 
-                renderItem={({ item }) => (   
-                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={pokedleResult}/>
+                renderItem={({ item, index }) => (   
+                    <PokedleRow pokemon={item} daily={dailyPokemon} comparison={resultList[index]}/>
                 )}
                 
             />
