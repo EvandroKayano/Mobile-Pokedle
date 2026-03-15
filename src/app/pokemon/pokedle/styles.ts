@@ -4,15 +4,15 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container:{
         flex: 1, 
-        padding: 10, 
+        padding: 5, 
         backgroundColor: colors.gray[400],
-        paddingHorizontal: 15,
+        paddingHorizontal: 5,
     },
     header:{
 
     },
     row:{
-        flexDirection: "row",
+        marginTop: 10,
     },
     inputContainer:{
         height: 60,

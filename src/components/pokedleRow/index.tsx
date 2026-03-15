@@ -57,23 +57,24 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
     let type2style: ImageStyle;
     switch(comparison[1]){
         case RESULT.RIGHT:
-            type2style = styles.statsRight;
+            type2style = styles.rightSpot;
             break;
         case RESULT.WRONG_SPOT:
             type2style = styles.wrongSpot;
             break;
         case RESULT.WRONG_ANSWER:
-            if(pokemon.type2 === "none")
-                type2style=styles.noneSprite;
-            else
-                type2style = styles.statsWrong;
+            type2style = styles.wrongAnswer;
             break;
+
+
         default:
             type2style = styles.sprite;
             break;
     }
 
     if(pokemon.type2 == undefined) pokemon.type2 = "none";
+
+
 
 
     let height="";
@@ -86,8 +87,6 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
         height = `${pokemon.height*10}cm`;
     let weight = `${pokemon.weight/10}Kg`;
 
-
-
     return (
         <View style={styles.container}>
             <Image
@@ -95,14 +94,16 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
                 style={styles.sprite}
             />
             
-            <Image
-                source={pkmTypes[pokemon.type1]}
-                style={type1style}
-            />
-            <View style={pokemon.type2 === "none" ? [styles.noneOuterSprite,{backgroundColor: 'rgba(0, 255, 0, 0.6)'}] : styles.noneOuterSprite}>
+            <View>
+                <Image
+                    source={pkmTypes[pokemon.type1]}
+                    style={comparison[0] === RESULT.WRONG_SPOT ? [type1style, styles.type1wrongSpot]: type1style}
+                />
+            </View>
+            <View style={[styles.noneOuterSprite, type2style]}>
                 <Image
                     source={pkmTypes[pokemon.type2]}
-                    style={pokemon.type2 === "none" ? styles.noneSprite : type2style}
+                    style={pokemon.type2 === "none" ? styles.noneSprite : styles.typeSprite}
                 />
             </View>
             

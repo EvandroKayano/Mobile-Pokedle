@@ -1,7 +1,6 @@
 import { colors } from "@/styles/colors";
+import { MaterialIcons } from "@expo/vector-icons";
 import { router, Tabs } from "expo-router";
-import { MaterialIcons} from "@expo/vector-icons"
-import { styles } from "./styles";
 
 export default function Layout(){
     return(
@@ -16,6 +15,7 @@ export default function Layout(){
                 tabBarInactiveTintColor: colors.gray[500],
             }}
         >
+            
             <Tabs.Screen name="index" options={{ 
                 title:"",
                 tabBarIcon:() => <MaterialIcons name="home" size={30} onPress={()=>router.back()}/>
@@ -27,7 +27,6 @@ export default function Layout(){
                 tabBarIcon:() => <MaterialIcons name="catching-pokemon" size={30} onPress={()=>router.navigate("/pokemon/pokedle")}/>
                 }} 
             />
-
         </Tabs>
     )
 }

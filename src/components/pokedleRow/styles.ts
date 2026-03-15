@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 10,
         flexDirection: "row",
         gap: 5,
     },
@@ -23,6 +22,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
     },
+    typeSprite:{
+        width: 100, 
+        height: 100, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+    },
     noneOuterSprite:{
         width: 100, 
         height: 100,
@@ -36,7 +41,25 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     wrongSpot:{
-        backgroundColor: "#ffff00",
+        backgroundColor: 'rgba(255, 255, 0, 0.6)',
+    },
+    rightSpot:{
+        backgroundColor: 'rgba(0, 255, 0, 0.6)'
+    },
+    wrongAnswer:{
+        backgroundColor: 'rgba(255, 0, 0, 0.6)'
+    },
+    type1wrongSpot:{
+        width: 100, 
+        height: 100, 
+        marginBottom: 5,
+        borderRadius: 15,
+        borderWidth: 5,
+        borderColor: "black",
+        overflow: "hidden",
+        justifyContent: 'center', 
+        alignItems: 'center',
+
     },
 
 
@@ -75,10 +98,4 @@ export const styles = StyleSheet.create({
         width: 100,
         opacity: 0.65,
     },
-    nothing:{
-        position: "absolute",
-        height: 95,
-        width: 100,
-        opacity: 0.0,
-    }
 });
