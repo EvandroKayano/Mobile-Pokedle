@@ -1,7 +1,8 @@
-
-import { colors } from "@/styles/colors";
 import { useEffect, useState } from "react";
-import { FlatList, Text, TextInputProps, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TextInputProps, TouchableOpacity, View } from "react-native";
+
+import { pokemonStorage } from "@/storage/pokemon-storage";
+import { colors } from "@/styles/colors";
 import { Input } from "../input";
 import { styles } from "./styles";
 
@@ -30,6 +31,7 @@ type Props = TextInputProps & {
 export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Props){
     const[visibility, setVisibility] = useState(false);
     const[suggestions, setSuggetions] = useState<string[]>([]);
+    const[suggestionsImage, setSuggetionsImage] = useState<string[]>([]);
 
     
     function handleSelect(opcao: string){
@@ -40,14 +42,28 @@ export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Pro
 
     useEffect(() => {
 
-        const filteredList = filterPokemonName(input,data);
-        setSuggetions(filteredList);
+        const loadSuggetions = async () =>{
+            const filteredList = filterPokemonName(input,data);
+            console.log(filteredList.length);
+            setSuggetions(filteredList);
 
-        if (filteredList.length > 0 && filteredList[0].toLowerCase() !== input.toLowerCase().trim()) {
-            setVisibility(true);
-        } else {
-            setVisibility(false);
+            if (filteredList.length > 0) {
+                setVisibility(true);
+            } else {
+                setVisibility(false);
+            }
+
+            const loadSuggetions = filteredList.map(async (pkmName) => {
+                const pkm = await pokemonStorage.getFromCache(pkmName.toLowerCase());
+                return pkm ? pkm.sprite : ""; 
+            });
+
+            const listImage:string[] = await Promise.all(loadSuggetions);
+            setSuggetionsImage(listImage);
         }
+
+        loadSuggetions();
+        
     }, [input, data])
 
     
@@ -72,11 +88,21 @@ export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Pro
                         data={suggestions}
                         keyExtractor={(item) => item}
                         keyboardShouldPersistTaps="handled"
-                        renderItem={({item}) => (
+                        renderItem={({item, index}) => (
                             <TouchableOpacity
                                 onPress={() => handleSelect(item)}
                                 style={styles.optionContainer}
                             >
+                                {suggestionsImage[index] !== "" ?
+                                <View style={styles.dropdownImageContainer}>
+                                    <Image source={{uri: suggestionsImage[index]}} style={styles.dropdownImage}/>
+                                </View>
+
+                                :
+                                <View style={styles.dropdownImageContainer}>
+                                    <View style={styles.noDropdownImage}/>
+                                </View>
+                                }
                                 <Text style={styles.text}>{item}</Text>
                             </TouchableOpacity>
                         )}

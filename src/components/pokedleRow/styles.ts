@@ -41,13 +41,13 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     wrongSpot:{
-        backgroundColor: 'rgba(255, 255, 0, 0.6)',
+        backgroundColor: 'rgba(200, 200, 0, 0.6)',
     },
     rightSpot:{
-        backgroundColor: 'rgba(0, 255, 0, 0.6)'
+        backgroundColor: 'rgba(0, 200, 0, 0.6)'
     },
     wrongAnswer:{
-        backgroundColor: 'rgba(255, 0, 0, 0.6)'
+        backgroundColor: 'rgba(200, 0, 0, 0.6)'
     },
     type1wrongSpot:{
         width: 100, 
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
         height: 100, 
         textAlign: "center",
         textAlignVertical: "center",
-        backgroundColor: 'rgba(0, 255, 0, 0.6)',
+        backgroundColor: 'rgba(0, 200, 0, 0.6)',
     },
     statsWrong:{
         fontWeight: 'bold',
@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
         height: 100, 
         textAlign: "center",
         textAlignVertical: "center",
-        backgroundColor: 'rgba(255, 0, 0, 0.6)',
+        backgroundColor: 'rgba(200, 0, 0, 0.6)',
     },
     backgroundImage:{
         position: "absolute",

@@ -877,7 +877,6 @@ export const allPokemonNames: string[] = [
   "Mr. Rime",
   "Darumaka",
   "Darmanitan",
-  "Yamask",
   "Runerigus",
   "Stunfisk",
   "Milcery",

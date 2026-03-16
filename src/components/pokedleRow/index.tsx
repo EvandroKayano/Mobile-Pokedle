@@ -32,6 +32,13 @@ function rightOrWrong(result:RESULT): TextStyle {
 
 }
 
+function rarityFilter(pkm:PokemonStorage):string{
+    if(pkm.is_baby) return "Baby"
+    else if(pkm.is_mythical) return "Mythical"
+    else if(pkm.is_legendary) return "Legendary"
+    else return "Comum"
+}
+
 export function PokedleRow({ pokemon, daily, comparison }: Props) {
     if (!comparison || comparison.length === 0) {
         return null; 
@@ -74,9 +81,6 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
 
     if(pokemon.type2 == undefined) pokemon.type2 = "none";
 
-
-
-
     let height="";
     if(pokemon.height > 10){                    // 21 dm
         let h = Math.floor(pokemon.height/10);  // 2
@@ -109,11 +113,7 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
             
             <Text style={rightOrWrong(comparison[2])}>  {pokemon.habitat} </Text>
             <Text style={rightOrWrong(comparison[3])}>  {pokemon.color} </Text>
-
-            <Text style={styles.statsRight}>  {pokemon.is_baby ? "Sim" : "Não"} </Text>
-            <Text style={styles.statsRight}>  {pokemon.is_legendary ? "Sim" : "Não"} </Text>
-            <Text style={styles.statsRight}>  {pokemon.is_mythical ? "Sim" : "Não"} </Text>
-
+            <Text style={rightOrWrong(comparison[4])}>  {rarityFilter(pokemon)} </Text>
             <Text style={rightOrWrong(comparison[5])}>  {pokemon.generation} </Text>
             <Text style={rightOrWrong(comparison[6])}>  {pokemon.shape} </Text>
             

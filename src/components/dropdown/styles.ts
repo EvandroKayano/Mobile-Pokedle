@@ -19,14 +19,35 @@ export const styles = StyleSheet.create({
         right: 0,
         backgroundColor: colors.gray[300],
         justifyContent: "center",
-        alignContent: "center"
+        alignContent: "center",
     },
     optionContainer:{
-        borderWidth: 0.2,
-        borderColor: colors.gray[950],
+        flexDirection: "row",
+        top:2,
+        left:2,
     },
     text:{
         fontSize: 24,
-        fontWeight:"bold"
-    }
+        left: 5,
+        fontFamily: "PokemonStyle"
+    },
+    dropdownImageContainer:{
+        width: 40, 
+        height: 40, 
+        marginBottom: 5,
+        borderRadius: 15,
+        borderWidth: 2,
+        borderColor: "black",
+        overflow: "hidden",
+    },
+    dropdownImage:{ 
+        width: "100%", 
+        height: "100%", 
+    },
+    noDropdownImage:{ 
+        width: "100%", 
+        height: "100%", 
+        marginRight: 10, 
+        backgroundColor: colors.gray[400], 
+    },
 })

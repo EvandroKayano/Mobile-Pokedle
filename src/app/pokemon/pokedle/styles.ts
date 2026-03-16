@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         marginTop: 10,
     },
     inputContainer:{
-        height: 60,
+        height: 65,
         width: "100%",
         backgroundColor: colors.gray[900],
         borderRadius: 10,

@@ -24,7 +24,6 @@ export default function Pokedle(){
 
     async function handleGuess(){
         let guess = await pokemonStorage.getByIdOrName(pokemonGuess.toLowerCase());
-        
         if(guess){
             //nGuesses+=1;
 
