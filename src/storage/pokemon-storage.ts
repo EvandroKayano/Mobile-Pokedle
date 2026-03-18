@@ -17,7 +17,8 @@ export type PokemonStorage = {
     shape: string,
     height: number,
     weight: number,
-    sprite: string
+    sprite: string,
+    //stage:number
 };
 
 async function get():Promise<PokemonStorage[]>{

@@ -6,7 +6,12 @@ export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage
   if( typeof valor === "string" && valor.toLowerCase() === "mimikyu"){
     valor = "778"
   }
-  
+  if( typeof valor === "string" && valor.toLowerCase() === "enamorus"){
+    valor = "905"
+  }
+
+  if( typeof valor === "string") valor = cleanPkmName(valor)
+
   const pokemonRes = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${valor}`
   );
@@ -23,10 +28,26 @@ export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage
   const pokemonInfo = await pokemonRes.json();
   const species = await speciesRes.json();
 
-  return refinePokemonData(pokemonInfo,species);
+  let stage = 0;
+
+  // se nao tiver pre-evolução
+  if(species.evolves_from_species === null) stage = 1;
+  // se tiver
+  else{
+      const evolvesFromId : number = extractIdFromLink(species.evolves_from_species.url);
+      const preEvo = await fetch(
+          `https://pokeapi.co/api/v2/pokemon-species/${evolvesFromId}/`
+      );
+      const preEvoPkm = await preEvo.json();
+      if(preEvoPkm.evolves_from_species === null) stage = 2;
+      else stage = 3;
+  }
+
+
+  return refinePokemonData(pokemonInfo, species, stage);
 }
 
-function refinePokemonData(pokemonInfo:any, species:any):PokemonStorage{
+function refinePokemonData(pokemonInfo:any, species:any, stage : number):PokemonStorage{
   let GEN : string;
   switch(species.generation.name){
     case "generation-i":
@@ -70,9 +91,11 @@ function refinePokemonData(pokemonInfo:any, species:any):PokemonStorage{
       break;
   }
 
+  const formattedName = cleanPkmName(pokemonInfo.name);
+
   const refinedPokemon : PokemonStorage ={
     id: pokemonInfo.id,
-    name: pokemonInfo.name,
+    name: formattedName,
     height: pokemonInfo.height,
     weight: pokemonInfo.weight,
     generation: GEN,
@@ -84,11 +107,26 @@ function refinePokemonData(pokemonInfo:any, species:any):PokemonStorage{
     is_legendary: species.is_legendary,
     is_mythical: species.is_mythical,
     shape: species.shape?.name || "Unknown",
-    sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo.id}.png`
+    sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo.id}.png`,
+    //stage:stage
   };
 
   return refinedPokemon;
 }
+
+function cleanPkmName(nome : string) : string{
+  return nome.normalize("NFD")
+             .replace(/[\u0300-\u036f]/g, "")
+             .replace(/[.']/g,'')
+             .replace(/\s+/g, '-')
+             .toLowerCase()
+}
+
+const extractIdFromLink = (link:string): number => Number(new URL(link)
+                                            .pathname.split("/")
+                                            .filter(Boolean)
+                                            .pop()
+                                        )
 
 export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
   const ids : number [] = [];
@@ -108,9 +146,4 @@ export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
     //console.log(ids);
 
     return result.filter(pkm => pkm != null) as PokemonStorage[];
-}
-
-function captalize(value: string): string {
-  if (!value) return value;
-  return value.charAt(0).toUpperCase() + value.slice(1);
 }

@@ -44,7 +44,6 @@ export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Pro
 
         const loadSuggetions = async () =>{
             const filteredList = filterPokemonName(input,data);
-            console.log(filteredList.length);
             setSuggetions(filteredList);
 
             if (filteredList.length > 0) {

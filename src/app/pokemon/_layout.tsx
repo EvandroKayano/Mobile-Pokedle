@@ -1,8 +1,7 @@
-import { colors } from "@/styles/colors";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from 'expo-font';
-import { router, Tabs } from "expo-router";
+import { Stack } from "expo-router";
 import { ActivityIndicator, View } from "react-native";
+import { styles } from './styles';
 
 export default function Layout(){
     const [fontsLoaded] = useFonts({
@@ -10,35 +9,29 @@ export default function Layout(){
         })
     if(!fontsLoaded){
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" />
+            <View style={styles.loadingLogo}>
+                <ActivityIndicator size="large" color="#0000ff"/>
             </View>
         );
     }
         return(
-            <Tabs
-                screenOptions={{
-                    tabBarStyle:{
-                        backgroundColor: colors.gray[300],
-                    },
-                    headerShown: false,
-                    tabBarPosition: "top",
-                    tabBarActiveTintColor: colors.gray[900],
-                    tabBarInactiveTintColor: colors.gray[500],
-                }}
-            >
+            <Stack>
                 
-                <Tabs.Screen name="index" options={{ 
-                    title:"",
-                    tabBarIcon:() => <MaterialIcons name="home" size={30} onPress={()=>router.back()}/>
+                <Stack.Screen 
+                    name="index" 
+                    options={{ 
+                        title: "Minigames",
+                        headerShown: true,
                     }} 
                 />
                 
-                <Tabs.Screen name="pokedle/index" options={{ 
-                    title:"",
-                    tabBarIcon:() => <MaterialIcons name="catching-pokemon" size={30} onPress={()=>router.navigate("/pokemon/pokedle")}/>
+                <Stack.Screen 
+                    name="pokedle/index" 
+                    options={{ 
+                        headerShown: false, 
+                        presentation: 'modal'
                     }} 
                 />
-            </Tabs>
+            </Stack>
         )
 }

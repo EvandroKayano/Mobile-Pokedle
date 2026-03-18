@@ -36,7 +36,12 @@ function rarityFilter(pkm:PokemonStorage):string{
     if(pkm.is_baby) return "Baby"
     else if(pkm.is_mythical) return "Mythical"
     else if(pkm.is_legendary) return "Legendary"
-    else return "Comum"
+    else return "Common"
+}
+
+function captalize(value: string): string {
+  if (!value) return value;
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 export function PokedleRow({ pokemon, daily, comparison }: Props) {
@@ -111,11 +116,11 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
                 />
             </View>
             
-            <Text style={rightOrWrong(comparison[2])}>  {pokemon.habitat} </Text>
-            <Text style={rightOrWrong(comparison[3])}>  {pokemon.color} </Text>
+            <Text style={rightOrWrong(comparison[2])}>  {captalize(pokemon.habitat)} </Text>
+            <Text style={rightOrWrong(comparison[3])}>  {captalize(pokemon.color)} </Text>
             <Text style={rightOrWrong(comparison[4])}>  {rarityFilter(pokemon)} </Text>
             <Text style={rightOrWrong(comparison[5])}>  {pokemon.generation} </Text>
-            <Text style={rightOrWrong(comparison[6])}>  {pokemon.shape} </Text>
+            <Text style={rightOrWrong(comparison[6])}>  {captalize(pokemon.shape)} </Text>
             
             <View style={styles.highLowBlock} >
                 { (comparison[7] === RESULT.HIGHER || comparison[7] === RESULT.LOWER) &&(

@@ -22,5 +22,5 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         flexDirection: "row",
         gap: 15,
-    },
+    }
 })
