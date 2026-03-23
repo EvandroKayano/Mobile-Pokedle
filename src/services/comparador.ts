@@ -42,15 +42,20 @@ export function compareGuessToDaily(guess:any, todays:any) : RESULT[] {
         guessed.is_mythical     === daily.is_mythical;
         appraisal.push(isCorrect ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
 
-        //gen 5
+        //stage 5
+        if(guessed.stage > daily.stage) appraisal.push(RESULT.LOWER)          // o pokemon é mais baixo
+        else if (guessed.stage < daily.stage) appraisal.push(RESULT.HIGHER)   // o pokemon é mais alto
+        else appraisal.push(RESULT.RIGHT)
+
+        //gen 6
         appraisal.push (guessed.generation === daily.generation ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //shape 6
+        //shape 7
         appraisal.push (guessed.shape === daily.shape ? RESULT.RIGHT : RESULT.WRONG_ANSWER);
-        //height 7 
+        //height 8 
         if(guessed.height > daily.height) appraisal.push(RESULT.LOWER)          // o pokemon é mais baixo
         else if (guessed.height < daily.height) appraisal.push(RESULT.HIGHER)   // o pokemon é mais alto
         else appraisal.push(RESULT.RIGHT)
-        //weight 8
+        //weight 9
         if(guessed.weight > daily.weight) appraisal.push(RESULT.LOWER)          // o pokemon é mais baixo
         else if (guessed.weight < daily.weight) appraisal.push(RESULT.HIGHER)   // o pokemon é mais alto
         else appraisal.push(RESULT.RIGHT)

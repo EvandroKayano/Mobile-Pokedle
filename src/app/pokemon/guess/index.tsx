@@ -6,14 +6,14 @@ import { ActivityIndicator, Alert, FlatList, Modal, ScrollView, Text, View } fro
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
 import { Button } from "@/components/button";
 import { DropdownInput } from "@/components/dropdown";
-import { PokedleRow } from "@/components/pokedleRow";
+import { PokedleRow } from "@/components/pokedleGuess";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";
 
 
-export default function Pokedle(){
+export default function Guess(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
     
     const [pokemonGuess, setPokemonGuess] = useState('');
@@ -65,7 +65,6 @@ export default function Pokedle(){
         }
     }
     */
-
     const guessedPokemons = guessList.map(pokemon => pokemon.name.toLowerCase())
     const availableOptions = allPokemonNames.filter(nome => !guessedPokemons.includes(nome.toLowerCase()))
 
@@ -112,9 +111,9 @@ export default function Pokedle(){
                     name="arrow-back" 
                     size={30} 
                     color="black" 
-                    onPress={() => router.back()} // Isso "desempilha" o jogo e volta pro Hub!
+                    onPress={() => router.back()}
                 />
-                <Text style={styles.headerText}>Pokedle</Text>
+                <Text style={styles.headerText}>PokeGuess</Text>
             </View>
 
 
@@ -130,16 +129,13 @@ export default function Pokedle(){
                 <Button title="Guess" onPress={handleGuess} />
             </View>
 
-            {/*
-                <View style={{ flex: 1, padding: 20 }}>
+            {/*             
+                <View style={{height: 150, padding: 20, width: 900 }}>
                     <Button title="[DEV] Resetar Banco" onPress={resetarBancoDeDados} />
-                </View>
-            */}  
+                </View> 
+            */}
 
             
-
-            
-
             <ScrollView 
                 horizontal={true} 
                 showsHorizontalScrollIndicator={true}
@@ -154,12 +150,14 @@ export default function Pokedle(){
                             <Text style={styles.indexText}>Habitat</Text>
                             <Text style={styles.indexText}>Color</Text>
                             <Text style={styles.indexText}>Rarity</Text>
+                            <Text style={styles.indexText}>Stage</Text>
                             <Text style={styles.indexText}>Generation</Text>
                             <Text style={styles.indexText}>Body</Text>
                             <Text style={styles.indexText}>Height</Text>
                             <Text style={styles.indexText}>Weight</Text>
                         </View>
                     )}
+
                     <FlatList
                         data={guessList}
                         style={styles.row} 
@@ -169,6 +167,7 @@ export default function Pokedle(){
                         )}
                         
                     />
+
                 </View>
             </ScrollView>
         </View>

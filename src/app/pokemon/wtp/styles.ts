@@ -6,20 +6,18 @@ export const styles = StyleSheet.create({
         flex: 1, 
         padding: 5, 
         backgroundColor: colors.gray[400],
-        paddingHorizontal: 5,
     },
     header:{ 
         flexDirection: 'row', 
         alignItems: 'center', 
         marginTop: 20, 
-        gap: 2,
+        padding: 5
     },
     headerText:{ 
         fontSize: 24, 
         marginLeft: 10,
     },
     row:{
-        marginTop: 10,
         flex: 1,
     },
     inputContainer:{
@@ -34,12 +32,6 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         flexDirection: "row",
         alignContent:"center"
-    },
-    indexColumns: {
-        flexDirection: "row",
-        top: 5,
-        gap: 5,
-
     },
     indexText: {
         width: 100,
@@ -83,5 +75,29 @@ export const styles = StyleSheet.create({
         padding: 3,
         paddingLeft: 5,
         paddingRight: 5,
+    },
+    imageWrapper: {
+        alignItems: 'center',
+        margin: 10,
+    },
+    shadowContainer:{
+        height: 120,
+        width: 120, 
+        borderRadius: 10,
+        borderWidth: 8,
+        borderColor: colors.gray[800],
+        overflow: "hidden",
+    },
+    zoomedContent: {
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        
+    },
+    shadow:{
+        tintColor: "rgba(0,0,0,1)",
+        width: "100%", 
+        height: "100%", 
     }
 })

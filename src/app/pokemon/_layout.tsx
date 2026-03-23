@@ -26,7 +26,15 @@ export default function Layout(){
                 />
                 
                 <Stack.Screen 
-                    name="pokedle/index" 
+                    name="guess/index" 
+                    options={{ 
+                        headerShown: false, 
+                        presentation: 'modal'
+                    }} 
+                />
+
+                <Stack.Screen 
+                    name="wtp/index" 
                     options={{ 
                         headerShown: false, 
                         presentation: 'modal'

@@ -3,11 +3,26 @@ import { getDailyNumber } from "@/utils/dailySeed";
 
 export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage | null>{
 
+  if( typeof valor === "string" && valor.toLowerCase() === "keldeo"){
+    valor = "647"
+  }
+  if( typeof valor === "string" && valor.toLowerCase() === "oricorio"){
+    valor = "741"
+  }
   if( typeof valor === "string" && valor.toLowerCase() === "mimikyu"){
     valor = "778"
   }
+  if( typeof valor === "string" && valor.toLowerCase() === "eiscue"){
+    valor = "875"
+  }
   if( typeof valor === "string" && valor.toLowerCase() === "enamorus"){
     valor = "905"
+  }
+  if( typeof valor === "string" && valor.toLowerCase() === "squawkabilly"){
+    valor = "931"
+  }
+  if( typeof valor === "string" && valor.toLowerCase() === "dudunsparce"){
+    valor = "982"
   }
 
   if( typeof valor === "string") valor = cleanPkmName(valor)
@@ -47,7 +62,7 @@ export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage
   return refinePokemonData(pokemonInfo, species, stage);
 }
 
-function refinePokemonData(pokemonInfo:any, species:any, stage : number):PokemonStorage{
+function refinePokemonData(pokemonInfo:any, species:any, stage:number):PokemonStorage{
   let GEN : string;
   switch(species.generation.name){
     case "generation-i":
@@ -108,18 +123,20 @@ function refinePokemonData(pokemonInfo:any, species:any, stage : number):Pokemon
     is_mythical: species.is_mythical,
     shape: species.shape?.name || "Unknown",
     sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo.id}.png`,
-    //stage:stage
+    stage:stage
   };
 
   return refinedPokemon;
 }
 
-function cleanPkmName(nome : string) : string{
-  return nome.normalize("NFD")
+function cleanPkmName(name : string) : string{
+  if(name === "dudunsparce-two-segment")
+    return "dudunsparce";
+  return name.normalize("NFD")
              .replace(/[\u0300-\u036f]/g, "")
              .replace(/[.']/g,'')
              .replace(/\s+/g, '-')
-             .toLowerCase()
+             .toLowerCase();
 }
 
 const extractIdFromLink = (link:string): number => Number(new URL(link)

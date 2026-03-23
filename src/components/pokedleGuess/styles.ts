@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: "black",
         overflow: "hidden",
+        //tintColor: "rgba(1,1,1,0.8)"
     },
     noneSprite:{
         width: 75, 

@@ -44,7 +44,7 @@ function captalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export function PokedleRow({ pokemon, daily, comparison }: Props) {
+export function PokedleRow({ pokemon, comparison }: Props) {
     if (!comparison || comparison.length === 0) {
         return null; 
     }
@@ -119,22 +119,32 @@ export function PokedleRow({ pokemon, daily, comparison }: Props) {
             <Text style={rightOrWrong(comparison[2])}>  {captalize(pokemon.habitat)} </Text>
             <Text style={rightOrWrong(comparison[3])}>  {captalize(pokemon.color)} </Text>
             <Text style={rightOrWrong(comparison[4])}>  {rarityFilter(pokemon)} </Text>
-            <Text style={rightOrWrong(comparison[5])}>  {pokemon.generation} </Text>
-            <Text style={rightOrWrong(comparison[6])}>  {captalize(pokemon.shape)} </Text>
-            
-            <View style={styles.highLowBlock} >
-                { (comparison[7] === RESULT.HIGHER || comparison[7] === RESULT.LOWER) &&(
-                    <Image source={directionIcon(comparison[7])} style={styles.backgroundImage} />
-                )}
-                <Text style={rightOrWrong(comparison[7])}>  {height} </Text>
-            </View>
-            
 
+
+            <View style={styles.highLowBlock} >
+                { (comparison[5] === RESULT.HIGHER || comparison[5] === RESULT.LOWER) &&(
+                    <Image source={directionIcon(comparison[5])} style={styles.backgroundImage} />
+                )}
+                <Text style={rightOrWrong(comparison[5])}>  {pokemon.stage} </Text>
+            </View>
+
+
+            <Text style={rightOrWrong(comparison[6])}>  {pokemon.generation} </Text>
+            <Text style={rightOrWrong(comparison[7])}>  {captalize(pokemon.shape)} </Text>
+            
             <View style={styles.highLowBlock} >
                 { (comparison[8] === RESULT.HIGHER || comparison[8] === RESULT.LOWER) &&(
                     <Image source={directionIcon(comparison[8])} style={styles.backgroundImage} />
                 )}
-                <Text style={rightOrWrong(comparison[8])}>  {weight} </Text>
+                <Text style={rightOrWrong(comparison[8])}>  {height} </Text>
+            </View>
+            
+
+            <View style={styles.highLowBlock} >
+                { (comparison[9] === RESULT.HIGHER || comparison[9] === RESULT.LOWER) &&(
+                    <Image source={directionIcon(comparison[9])} style={styles.backgroundImage} />
+                )}
+                <Text style={rightOrWrong(comparison[9])}>  {weight} </Text>
             </View>
 
         </View>
