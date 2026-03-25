@@ -1,12 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from 'expo-router';
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, Modal, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, ScrollView, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
 import { Button } from "@/components/button";
 import { DropdownInput } from "@/components/dropdown";
 import { PokedleRow } from "@/components/pokedleGuess";
+import { WinModal } from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
@@ -22,14 +23,13 @@ export default function Guess(){
 
     const [loading, setLoading] = useState(true);
     const [winCondition, setWinCondition] = useState(false);
-
-    //let nGuesses : number;
+    const [nGuesses, setNGuesses] = useState<number>(0);
 
     async function handleGuess(){
         if(pokemonGuess == "") Alert.alert("Error","Insert a pokémon name to guess today's pokémon");
         let guess = await pokemonStorage.getByIdOrName(pokemonGuess.toLowerCase());
         if(guess){
-            //nGuesses+=1;
+
 
             // lista de guesses de pokemon  
             const list : PokemonStorage[] = [...guessList];
@@ -39,16 +39,19 @@ export default function Guess(){
             // resultados da comparação
             const appraise = compareGuessToDaily(guess,dailyPokemon);
 
+            // condição de vitória
             const sum = appraise.reduce((partialSum, a) => partialSum + a, 0);
             if(sum == 0){
                 setWinCondition(true)
             }
 
-
             // lista de resultados na ordem de guesses
             const resultados : RESULT[][] = [...resultList];
             resultados.unshift(appraise)
             setResultList(resultados)
+        
+            // numero de guesses
+            setNGuesses(list.length);
 
             setPokemonGuess("");
         }
@@ -88,23 +91,11 @@ export default function Guess(){
     return (
         <View style={styles.container}> 
 
-            <Modal 
-                visible={winCondition}
-                animationType="fade"
-                transparent
-            >
-                <View style={styles.insufilm}>
-                    <View  style={styles.winModal}>
-                        <Text>PARABÉNS</Text>
-
-                        <Button
-                            title="Voltar ao menu"
-                            onPress={() => router.back()}
-                            style={styles.modalButton}
-                        />
-                    </View>
-                </View>
-            </Modal>
+            <WinModal
+                win={winCondition}
+                guesses={nGuesses}
+                todaysPokemon={dailyPokemon}
+            />
 
             <View style={styles.header}>
                 <MaterialIcons 

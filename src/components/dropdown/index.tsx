@@ -102,7 +102,16 @@ export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Pro
                                     <View style={styles.noDropdownImage}/>
                                 </View>
                                 }
-                                <Text style={styles.text}>{item}</Text>
+
+                                <Text 
+                                    style={styles.text} 
+                                    numberOfLines={1} 
+                                    adjustsFontSizeToFit={true} 
+                                    minimumFontScale={0.5}
+                                >
+                                    {item}
+                                </Text>
+
                             </TouchableOpacity>
                         )}
                     />

@@ -1,12 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from 'expo-router';
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, Image, ImageBackground, Modal, Text, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, Image, ImageBackground, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
 import { Button } from "@/components/button";
 import { DropdownInput } from "@/components/dropdown";
 import { PokedleImageOnly } from "@/components/pokedleImageOnly";
+import { WinModal } from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
@@ -93,23 +94,11 @@ export default function WTP(){
     return (
         <View style={styles.container}> 
 
-            <Modal 
-                visible={winCondition}
-                animationType="fade"
-                transparent
-            >
-                <View style={styles.insufilm}>
-                    <View  style={styles.winModal}>
-                        <Text>PARABÉNS</Text>
-
-                        <Button
-                            title="Voltar ao menu"
-                            onPress={() => router.back()}
-                            style={styles.modalButton}
-                        />
-                    </View>
-                </View>
-            </Modal>
+            <WinModal
+                win={winCondition}
+                guesses={nGuesses}
+                todaysPokemon={dailyPokemon}
+            />
 
             <View style={styles.header}>
                 <MaterialIcons 

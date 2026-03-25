@@ -47,35 +47,6 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius: 3,
         borderBottomRightRadius: 3,
     },
-    insufilm:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    },
-    winModal:{
-        width: '80%',
-        backgroundColor: colors.gray[400],
-        borderRadius: 20,
-        padding: 10,
-        alignItems: "center",
-
-        shadowColor: "black",
-        shadowOffset: { 
-            width: 0, 
-            height: 2 
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    modalButton:{
-        backgroundColor: colors.red[300],
-        borderRadius: 5,
-        padding: 3,
-        paddingLeft: 5,
-        paddingRight: 5,
-    },
     imageWrapper: {
         alignItems: 'center',
         margin: 10,

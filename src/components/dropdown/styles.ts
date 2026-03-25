@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
         left:2,
     },
     text:{
+        flex: 1,
         fontSize: 24,
         left: 5,
         fontFamily: "PokemonStyle"

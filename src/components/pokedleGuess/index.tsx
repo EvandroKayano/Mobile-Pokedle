@@ -39,7 +39,7 @@ function rarityFilter(pkm:PokemonStorage):string{
     else return "Common"
 }
 
-function captalize(value: string): string {
+export function captalize(value: string): string {
   if (!value) return value;
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
