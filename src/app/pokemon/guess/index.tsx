@@ -9,7 +9,6 @@ import { DropdownInput } from "@/components/dropdown";
 import { PokedleRow } from "@/components/pokedleGuess";
 import { WinModal } from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
-import { getDailyPokemonList } from "@/services/dailyPokemon";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";
 
@@ -23,6 +22,7 @@ export default function Guess(){
 
     const [loading, setLoading] = useState(true);
     const [winCondition, setWinCondition] = useState(false);
+    const [modalVisibility, setModalVisibility] = useState(false);
     const [nGuesses, setNGuesses] = useState<number>(0);
 
     async function handleGuess(){
@@ -42,7 +42,8 @@ export default function Guess(){
             // condição de vitória
             const sum = appraise.reduce((partialSum, a) => partialSum + a, 0);
             if(sum == 0){
-                setWinCondition(true)
+                setWinCondition(true);
+                setModalVisibility(true);
             }
 
             // lista de resultados na ordem de guesses
@@ -56,25 +57,25 @@ export default function Guess(){
             setPokemonGuess("");
         }
     }
-    /*
-    const resetarBancoDeDados = async () => {
-        try {
-            await AsyncStorage.removeItem("pokemon-cache");
-            await AsyncStorage.clear();
-            console.log("BD apagado");
-            alert("Cache limpo! Reinicie o app.");
-        } catch (error) {
-            console.error("Erro ao limpar cache", error);
-        }
-    }
-    */
+    
+    // const resetarBancoDeDados = async () => {
+    //     try {
+    //         await AsyncStorage.removeItem("pokemon-cache");
+    //         await AsyncStorage.clear();
+    //         console.log("BD apagado");
+    //         alert("Cache limpo! Reinicie o app.");
+    //     } catch (error) {
+    //         console.error("Erro ao limpar cache", error);
+    //     }
+    // }
+    
     const guessedPokemons = guessList.map(pokemon => pokemon.name.toLowerCase())
     const availableOptions = allPokemonNames.filter(nome => !guessedPokemons.includes(nome.toLowerCase()))
 
     useEffect(() => {
         async function loadStorage() {
             try {
-                const data = await getDailyPokemonList();
+                const data = await pokemonStorage.getDailyPokemonList();
                 setDailyPokemon(data[0]);
 
             } catch (e) {
@@ -92,9 +93,10 @@ export default function Guess(){
         <View style={styles.container}> 
 
             <WinModal
-                win={winCondition}
+                modalVisibility={modalVisibility}
                 guesses={nGuesses}
                 todaysPokemon={dailyPokemon}
+                onClose={()=>setModalVisibility(false)}
             />
 
             <View style={styles.header}>
@@ -120,11 +122,11 @@ export default function Guess(){
                 <Button title="Guess" onPress={handleGuess} />
             </View>
 
-            {/*             
-                <View style={{height: 150, padding: 20, width: 900 }}>
+                        
+                {/* <View style={{height: 150, padding: 20, width: 900 }}>
                     <Button title="[DEV] Resetar Banco" onPress={resetarBancoDeDados} />
-                </View> 
-            */}
+                </View>  */}
+           
 
             
             <ScrollView 

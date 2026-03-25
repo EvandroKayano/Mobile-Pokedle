@@ -65,12 +65,13 @@ export const styles = StyleSheet.create({
         textShadowOffset: {
             width: 0, 
             height: 2,
-        }
+        },
+        bottom: 5
     },
     pkmSprite:{ 
         width: 100, 
         height: 100, 
-        backgroundColor: colors.gray[300], 
+        backgroundColor: "white", 
         borderRadius: 15,
         borderWidth: 3,
         borderColor: "black",

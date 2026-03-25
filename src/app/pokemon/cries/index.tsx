@@ -14,7 +14,7 @@ import { randQuadrant, scaleOffset } from "@/utils/randQuadrant";
 import { styles } from "./styles";
 
 
-export default function WTP(){
+export default function Cries(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
     
     const [pokemonGuess, setPokemonGuess] = useState('');

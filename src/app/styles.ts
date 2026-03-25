@@ -9,18 +9,15 @@ export const styles = StyleSheet.create({
     header:{
         paddingHorizontal: 15,
         width:"100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        flexDirection: "column",
         alignItems: "center",
-        marginBottom: 32,
     },
     title:{
         color: colors.gray[900],
         fontSize: 24,
     },
     displays:{
-        justifyContent: "center",
-        flexDirection: "row",
-        gap: 15,
+        alignItems: "center",
+        flexDirection: "column",
     }
 })

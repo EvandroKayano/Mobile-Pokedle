@@ -1,4 +1,5 @@
 import { fetchPokemon } from "@/services/dailyPokemon";
+import { getDailyNumber } from "@/utils/dailySeed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const POKEMON_STORAGE_KEY = "pokemon-storage"
@@ -71,9 +72,30 @@ async function getFromCache(valor :number|string) : Promise<PokemonStorage | nul
         return null
 }
 
+export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
+  const ids : number [] = [];
+
+  for (let i = 0 ; i<5; i++){
+    const id = getDailyNumber(1025,i);
+    // está gerando 5 numeros aleatórios
+    // console.log(id);
+    ids.push(id);
+  }
+
+  const promises = ids.map(
+      id => pokemonStorage.getByIdOrName(id)
+    )
+    const result = await Promise.all(promises);
+
+    //console.log(ids);
+
+    return result.filter(pkm => pkm != null) as PokemonStorage[];
+}
+
 
 export const pokemonStorage = {
     get,
     getByIdOrName,
     getFromCache,
+    getDailyPokemonList
 }

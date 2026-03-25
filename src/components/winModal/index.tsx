@@ -4,26 +4,34 @@ import { PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";
 
 import { router } from "expo-router";
-import { Image, Modal, Text, View } from "react-native";
+import { Image, Modal, Pressable, Text, View } from "react-native";
 
 type Props = {
-    win : boolean
+    modalVisibility : boolean
     guesses: number
     todaysPokemon : PokemonStorage
+    onClose: () => void
 }
 
-export function WinModal({win,guesses,todaysPokemon}:Props){
+export function WinModal({modalVisibility,guesses,todaysPokemon, onClose}:Props){
     return(
            <Modal 
-                visible={win}
+                visible={modalVisibility}
                 animationType="fade"
                 transparent
             >
-                <View style={styles.insufilm}>
+                <Pressable style={styles.insufilm} onPress={onClose}>
                     <View style={styles.winModal}>
                         
-                        <Text style={styles.textHeader}>PARABÉNS</Text>
-                        <Text style={styles.textSubHeader}>Você acertou:</Text>
+                        <Text 
+                            style={styles.textHeader}
+                            numberOfLines={1} 
+                            adjustsFontSizeToFit={true} 
+                            minimumFontScale={0.5}
+                        >
+                            CONGRATULATIONS!
+                        </Text>
+                        <Text style={styles.textSubHeader}>You got it right:</Text>
 
                         <View style={styles.stats}>
                             <Image
@@ -40,19 +48,19 @@ export function WinModal({win,guesses,todaysPokemon}:Props){
                                     adjustsFontSizeToFit={true} 
                                     minimumFontScale={0.5}
                                 >
-                                    Número de tentativas: {guesses}
+                                    Number of attempts: {guesses}
                                 </Text>
                             </View>
                         </View>
 
 
                         <Button
-                            title="Voltar ao menu"
+                            title="Back to menu"
                             onPress={() => router.back()}
                             style={styles.modalButton}
                         />
                     </View>
-                </View>
+                </Pressable>
             </Modal>
     )
 }      

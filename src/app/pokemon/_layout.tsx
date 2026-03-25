@@ -40,6 +40,14 @@ export default function Layout(){
                         presentation: 'modal'
                     }} 
                 />
+
+                <Stack.Screen 
+                    name="cries/index" 
+                    options={{ 
+                        headerShown: false, 
+                        presentation: 'modal'
+                    }} 
+                />
             </Stack>
         )
 }

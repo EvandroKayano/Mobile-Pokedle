@@ -1,47 +1,30 @@
-import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
-import { getDailyNumber } from "@/utils/dailySeed";
+import { PokemonStorage } from "@/storage/pokemon-storage";
 
 export async function fetchPokemon(valor:number|string) : Promise<PokemonStorage | null>{
-
-  if( typeof valor === "string" && valor.toLowerCase() === "keldeo"){
-    valor = "647"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "oricorio"){
-    valor = "741"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "mimikyu"){
-    valor = "778"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "eiscue"){
-    valor = "875"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "enamorus"){
-    valor = "905"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "squawkabilly"){
-    valor = "931"
-  }
-  if( typeof valor === "string" && valor.toLowerCase() === "dudunsparce"){
-    valor = "982"
-  }
-
   if( typeof valor === "string") valor = cleanPkmName(valor)
 
-  const pokemonRes = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${valor}`
-  );
 
   const speciesRes = await fetch(
     `https://pokeapi.co/api/v2/pokemon-species/${valor}`
   );
-
-  if (!pokemonRes.ok || !speciesRes.ok ){
-    console.log("fail to connect")
+  if (!speciesRes.ok ){
+    console.log("fail to connect to pokemon-species");
     return null;
+  }
+  const species = await speciesRes.json();
+  
+  let pokemonRes = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${valor}`
+  );
+  if (!pokemonRes.ok ){
+    console.log("fail to connect to pokemon, trying with species id");
+
+    pokemonRes = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${species.id}`
+    );
   }
 
   const pokemonInfo = await pokemonRes.json();
-  const species = await speciesRes.json();
 
   let stage = 0;
 
@@ -132,6 +115,7 @@ function refinePokemonData(pokemonInfo:any, species:any, stage:number):PokemonSt
 function cleanPkmName(name : string) : string{
   if(name === "dudunsparce-two-segment")
     return "dudunsparce";
+
   return name.normalize("NFD")
              .replace(/[\u0300-\u036f]/g, "")
              .replace(/[.']/g,'')
@@ -144,23 +128,3 @@ const extractIdFromLink = (link:string): number => Number(new URL(link)
                                             .filter(Boolean)
                                             .pop()
                                         )
-
-export async function getDailyPokemonList(): Promise<PokemonStorage[]>{
-  const ids : number [] = [];
-
-  for (let i = 0 ; i<5; i++){
-    const id = getDailyNumber(1025,i);
-    // está gerando 5 numeros aleatórios
-    // console.log(id);
-    ids.push(id);
-  }
-
-  const promises = ids.map(
-      id => pokemonStorage.getByIdOrName(id)
-    )
-    const result = await Promise.all(promises);
-
-    //console.log(ids);
-
-    return result.filter(pkm => pkm != null) as PokemonStorage[];
-}
