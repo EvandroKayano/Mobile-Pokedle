@@ -1,20 +1,21 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from 'expo-router';
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, Image, ImageBackground, Text, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, ScrollView, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
-import { Button } from "@/components/button";
-import { DropdownInput } from "@/components/dropdown";
-import { PokedleImageOnly } from "@/components/pokedleImageOnly";
-import { WinModal } from "@/components/winModal";
+import Button from "@/components/button";
+import DropdownInput from "@/components/dropdown";
+import PokedleRow from "@/components/pokedleGuess";
+import Tip from "@/components/tip";
+import WinModal from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
-import { randQuadrant, scaleOffset } from "@/utils/randQuadrant";
+import { pkmTypes } from "@/styles/pkmTypes";
 import { styles } from "./styles";
 
 
-export default function Cries(){
+export default function Entries(){
     const [dailyPokemon, setDailyPokemon] = useState<PokemonStorage>("" as unknown as PokemonStorage);
     
     const [pokemonGuess, setPokemonGuess] = useState('');
@@ -24,9 +25,7 @@ export default function Cries(){
     const [loading, setLoading] = useState(true);
     const [winCondition, setWinCondition] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false);
-
     const [nGuesses, setNGuesses] = useState<number>(0);
-
 
     async function handleGuess(){
         if(pokemonGuess == "") Alert.alert("Error","Insert a pokémon name to guess today's pokémon");
@@ -60,18 +59,18 @@ export default function Cries(){
             setPokemonGuess("");
         }
     }
-    /*
-    const resetarBancoDeDados = async () => {
-        try {
-            await AsyncStorage.removeItem("pokemon-cache");
-            await AsyncStorage.clear();
-            console.log("BD apagado");
-            alert("Cache limpo! Reinicie o app.");
-        } catch (error) {
-            console.error("Erro ao limpar cache", error);
-        }
-    }
-    */
+    
+    // const resetarBancoDeDados = async () => {
+    //     try {
+    //         await AsyncStorage.removeItem("pokemon-cache");
+    //         await AsyncStorage.clear();
+    //         console.log("BD apagado");
+    //         alert("Cache limpo! Reinicie o app.");
+    //     } catch (error) {
+    //         console.error("Erro ao limpar cache", error);
+    //     }
+    // }
+    
     const guessedPokemons = guessList.map(pokemon => pokemon.name.toLowerCase())
     const availableOptions = allPokemonNames.filter(nome => !guessedPokemons.includes(nome.toLowerCase()))
 
@@ -109,31 +108,42 @@ export default function Cries(){
                     color="black" 
                     onPress={() => router.back()}
                 />
-                <Text style={styles.headerText}>Who's That Pokemon?</Text>
+                <Text style={styles.headerText}>Pokemon Entry</Text>
             </View>
-            
 
-            <View style={styles.imageWrapper}>
-                <View style={styles.shadowContainer}>
-                    <ImageBackground 
-                        source={require('@/assets/images/wtp-background.jpg')} 
-                        style={[styles.zoomedContent,
-                            {transform: [
-                                { scale: scaleOffset(nGuesses) },
-                                { translateX: randQuadrant(dailyPokemon.id, nGuesses)[0] },
-                                { translateY: randQuadrant(dailyPokemon.id, nGuesses)[1] }
-                            ]}
-                        ]}
-                        resizeMode="cover"
-                    >
-                        <Image
-                            source={{uri: dailyPokemon.sprite}}
-                            style={styles.shadow}
-                        />
-                    </ImageBackground>
+            <View style={styles.entryContainer}>
+                <Text 
+                    style={styles.entry}
+                    numberOfLines={1}
+                    adjustsFontSizeToFit={true}
+                >
+                    {dailyPokemon.entry}
+                </Text>
+
+                <View style={styles.tips}>
+
+                    <Tip
+                        title="Types"
+                        condition={true}
+                        content={{
+                            type:"Image", 
+                            data:[
+                                pkmTypes[dailyPokemon.type1],
+                                pkmTypes[dailyPokemon.type2 ? dailyPokemon.type2 : "none"]
+                            ]
+                        }}
+                        icon="category"
+                    />
+                    <Tip
+                        title="Generations"
+                        condition={true}
+                        content={{type:"Text", data:dailyPokemon.generation}}
+                        icon="pin"
+                    />
+
                 </View>
-            </View>
 
+            </View>
 
             <View style = {styles.inputContainer}>
                 <DropdownInput
@@ -147,23 +157,47 @@ export default function Cries(){
                 <Button title="Guess" onPress={handleGuess} />
             </View>
 
-            {/*             
-                <View style={{height: 150, padding: 20, width: 900 }}>
+                        
+                {/* <View style={{height: 150, padding: 20, width: 900 }}>
                     <Button title="[DEV] Resetar Banco" onPress={resetarBancoDeDados} />
-                </View> 
-            */}
+                </View>  */}
+           
 
-            <View style={{ flex: 1, width: '100%', marginTop: 20 }}>
-                <FlatList
-                    data={guessList}
-                    style={styles.row}
-                    keyExtractor={ (item) => `${item.id}` }
-                    renderItem={({item}) => (   
-                        <PokedleImageOnly pokemon={item} daily={dailyPokemon}/>
+            
+            <ScrollView 
+                horizontal={true} 
+                showsHorizontalScrollIndicator={true}
+            >
+                <View>
+                    {guessList.length > 0 && 
+                    (
+                        <View style={styles.indexColumns}>
+                            <Text style={styles.indexText}>Pokémon</Text>
+                            <Text style={styles.indexText}>Type 1</Text>
+                            <Text style={styles.indexText}>Type 2</Text>
+                            <Text style={styles.indexText}>Habitat</Text>
+                            <Text style={styles.indexText}>Color</Text>
+                            <Text style={styles.indexText}>Rarity</Text>
+                            <Text style={styles.indexText}>Stage</Text>
+                            <Text style={styles.indexText}>Generation</Text>
+                            <Text style={styles.indexText}>Body</Text>
+                            <Text style={styles.indexText}>Height</Text>
+                            <Text style={styles.indexText}>Weight</Text>
+                        </View>
                     )}
-                    
-                />
-            </View>
+
+                    <FlatList
+                        data={guessList}
+                        style={styles.row} 
+                        keyExtractor={ (item, index) => `${item.id}-${index}` }
+                        renderItem={({ item, index }) => (   
+                            <PokedleRow pokemon={item} daily={dailyPokemon} comparison={resultList[index]}/>
+                        )}
+                        
+                    />
+
+                </View>
+            </ScrollView>
         </View>
     );
 }

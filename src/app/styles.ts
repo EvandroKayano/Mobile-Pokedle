@@ -21,3 +21,7 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
     }
 })
+
+export default function Styles() {
+  return null;
+}

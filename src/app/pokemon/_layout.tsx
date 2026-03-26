@@ -34,7 +34,7 @@ export default function Layout(){
                 />
 
                 <Stack.Screen 
-                    name="wtp/index" 
+                    name="entries/index" 
                     options={{ 
                         headerShown: false, 
                         presentation: 'modal'
@@ -42,12 +42,14 @@ export default function Layout(){
                 />
 
                 <Stack.Screen 
-                    name="cries/index" 
+                    name="wtp/index" 
                     options={{ 
                         headerShown: false, 
                         presentation: 'modal'
                     }} 
                 />
+
+                
             </Stack>
         )
 }

@@ -22,15 +22,27 @@ export default function Index(){
                 </View>
             </TouchableOpacity>
 
-        
+            {/*         
             <TouchableOpacity 
                 style={styles.cardJogo}
-                onPress={() => router.push("/pokemon/cries/")}
+                onPress={() => router.push("/pokemon/entries/")}
             >
                 <MaterialIcons name="volume-up" size={40} color="black" />
                 <View style={{ marginLeft: 15 }}>
                     <Text style={styles.gameName}>Whose cry is it?</Text>
                     <Text style={styles.gameDesc}>Guess the pokémon cry</Text>
+                </View>
+            </TouchableOpacity>
+             */}
+
+            <TouchableOpacity 
+                style={styles.cardJogo}
+                onPress={() => router.push("/pokemon/entries/")}
+            >
+                <MaterialIcons name="format-align-center" size={40} color="black" />
+                <View style={{ marginLeft: 15 }}>
+                    <Text style={styles.gameName}>Whose entry is it?</Text>
+                    <Text style={styles.gameDesc}>Guess the pokémon entry</Text>
                 </View>
             </TouchableOpacity>
 

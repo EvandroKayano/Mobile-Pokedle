@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import Button from "@/components/button";
 import { captalize } from "@/components/pokedleGuess";
 import { PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";
@@ -13,7 +13,7 @@ type Props = {
     onClose: () => void
 }
 
-export function WinModal({modalVisibility,guesses,todaysPokemon, onClose}:Props){
+export default function WinModal({modalVisibility,guesses,todaysPokemon, onClose}:Props){
     return(
            <Modal 
                 visible={modalVisibility}

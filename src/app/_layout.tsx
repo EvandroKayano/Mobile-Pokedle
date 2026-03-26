@@ -11,7 +11,7 @@ export default function Layout(){
                 }
             }}
         >
-            <Stack.Screen name="pokemon/index" />
+            <Stack.Screen name="index"/>
         </Stack>
     )
 }

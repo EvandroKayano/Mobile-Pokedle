@@ -90,6 +90,9 @@ function refinePokemonData(pokemonInfo:any, species:any, stage:number):PokemonSt
   }
 
   const formattedName = cleanPkmName(pokemonInfo.name);
+  
+  const enEntry = species.genera.find((entry:any) => entry.language.name === "en");
+  const pokemonGenus:string = enEntry ? enEntry.genus : "Genus unknown";
 
   const refinedPokemon : PokemonStorage ={
     id: pokemonInfo.id,
@@ -106,7 +109,8 @@ function refinePokemonData(pokemonInfo:any, species:any, stage:number):PokemonSt
     is_mythical: species.is_mythical,
     shape: species.shape?.name || "Unknown",
     sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo.id}.png`,
-    stage:stage
+    stage:stage,
+    entry: pokemonGenus
   };
 
   return refinedPokemon;

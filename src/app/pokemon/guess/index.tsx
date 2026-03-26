@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, ScrollView, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
-import { Button } from "@/components/button";
-import { DropdownInput } from "@/components/dropdown";
-import { PokedleRow } from "@/components/pokedleGuess";
-import { WinModal } from "@/components/winModal";
+import Button from "@/components/button";
+import DropdownInput from "@/components/dropdown";
+import PokedleRow from "@/components/pokedleGuess";
+import WinModal from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
 import { styles } from "./styles";

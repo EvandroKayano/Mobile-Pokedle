@@ -85,3 +85,7 @@ export const styles = StyleSheet.create({
         paddingRight: 5,
     }
 })
+
+export default function Styles() {
+  return null;
+}

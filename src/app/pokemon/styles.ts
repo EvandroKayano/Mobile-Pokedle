@@ -37,3 +37,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center' 
     }
 })
+
+export default function Styles() {
+  return null;
+}

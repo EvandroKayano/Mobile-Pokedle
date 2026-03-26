@@ -44,7 +44,7 @@ export function captalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export function PokedleRow({ pokemon, comparison }: Props) {
+export default function PokedleRow({ pokemon, comparison }: Props) {
     if (!comparison || comparison.length === 0) {
         return null; 
     }

@@ -79,7 +79,7 @@ export default function WTP(){
         async function loadStorage() {
             try {
                 const data = await pokemonStorage.getDailyPokemonList();
-                setDailyPokemon(data[1]);
+                setDailyPokemon(data[2]);
 
             } catch (e) {
                 console.error(e);

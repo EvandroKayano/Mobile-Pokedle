@@ -28,7 +28,7 @@ type Props = TextInputProps & {
 }
 
 
-export function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Props){
+export default function DropdownInput({data, input, onChangeText, onSelect, ...rest}:Props){
     const[visibility, setVisibility] = useState(false);
     const[suggestions, setSuggetions] = useState<string[]>([]);
     const[suggestionsImage, setSuggetionsImage] = useState<string[]>([]);

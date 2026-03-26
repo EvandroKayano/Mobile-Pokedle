@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
         flex: 1, 
         padding: 5, 
         backgroundColor: colors.gray[400],
+        paddingHorizontal: 5,
     },
     header:{ 
         flexDirection: 'row', 
@@ -17,7 +18,30 @@ export const styles = StyleSheet.create({
         fontSize: 24, 
         marginLeft: 10,
     },
+    entryContainer:{
+        width: "100%",
+        backgroundColor: colors.yellow[100],
+        borderRadius: 10,
+        borderWidth: 5,
+        borderColor: colors.gray[800],
+        alignContent:"center",
+        justifyContent: "center",
+        padding: 15,
+        
+    },
+    entry:{
+        fontFamily: "PokemonStyle",
+        textAlign: "center",
+        fontSize: 20,
+    },
+    tips:{
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "flex-start",
+        width: "100%"
+    },
     row:{
+        marginTop: 10,
         flex: 1,
     },
     inputContainer:{
@@ -33,6 +57,12 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignContent:"center"
     },
+    indexColumns: {
+        flexDirection: "row",
+        top: 5,
+        gap: 5,
+
+    },
     indexText: {
         width: 100,
         textAlign: "center",
@@ -47,29 +77,34 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius: 3,
         borderBottomRightRadius: 3,
     },
-    imageWrapper: {
+    insufilm:{
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
-        margin: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
-    shadowContainer:{
-        height: 120,
-        width: 120, 
-        borderRadius: 10,
-        borderWidth: 8,
-        borderColor: colors.gray[800],
-        overflow: "hidden",
-    },
-    zoomedContent: {
-        width: "100%",
-        height: "100%",
+    winModal:{
+        width: '80%',
+        backgroundColor: colors.gray[400],
+        borderRadius: 20,
+        padding: 10,
         alignItems: "center",
-        justifyContent: "center",
-        
+
+        shadowColor: "black",
+        shadowOffset: { 
+            width: 0, 
+            height: 2 
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
-    shadow:{
-        tintColor: "rgba(0,0,0,1)",
-        width: "100%", 
-        height: "100%", 
+    modalButton:{
+        backgroundColor: colors.red[300],
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 5,
+        paddingRight: 5,
     }
 })
 
