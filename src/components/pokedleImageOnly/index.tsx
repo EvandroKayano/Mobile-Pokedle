@@ -12,7 +12,7 @@ function captalize(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export function PokedleImageOnly({ pokemon, daily }: Props) {
+export default function PokedleImageOnly({ pokemon, daily }: Props) {
 
     const correctStyle = pokemon.id === daily.id ? styles.green : styles.red;
 

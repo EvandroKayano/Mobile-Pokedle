@@ -1,3 +1,4 @@
+import { colors } from "@/styles/colors"
 import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
@@ -44,10 +45,17 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         textTransform: "capitalize",
+        fontWeight: "bold"
     },
     tipImage: {
         width: 50,
         height: 50,
+    },
+    guessesLeft:{
+        fontSize: 12,
+        fontFamily: "PokemonStyle",
+        textAlign: "center",
+        color: colors.gray[500],
     }
 })
 

@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, Image, ImageBackground, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
-import { Button } from "@/components/button";
-import { DropdownInput } from "@/components/dropdown";
-import { PokedleImageOnly } from "@/components/pokedleImageOnly";
-import { WinModal } from "@/components/winModal";
+import Button from "@/components/button";
+import DropdownInput from "@/components/dropdown";
+import PokedleImageOnly from "@/components/pokedleImageOnly";
+import WinModal from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
 import { pokemonStorage, PokemonStorage } from "@/storage/pokemon-storage";
 import { randQuadrant, scaleOffset } from "@/utils/randQuadrant";
@@ -153,10 +153,11 @@ export default function WTP(){
                 </View> 
             */}
 
-            <View style={{ flex: 1, width: '100%', marginTop: 20 }}>
+            <View style={styles.imageGuesses}>
                 <FlatList
                     data={guessList}
                     style={styles.row}
+                    ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
                     keyExtractor={ (item) => `${item.id}` }
                     renderItem={({item}) => (   
                         <PokedleImageOnly pokemon={item} daily={dailyPokemon}/>

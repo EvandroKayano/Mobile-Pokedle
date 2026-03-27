@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         flex: 1, 
         padding: 5, 
         backgroundColor: colors.gray[400],
-        paddingHorizontal: 5,
+        gap: 10
     },
     header:{ 
         flexDirection: 'row', 
@@ -28,6 +28,14 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 15,
         
+    },
+    entryBorder:{
+        borderWidth: 3,
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "auto",
+        padding: 5
     },
     entry:{
         fontFamily: "PokemonStyle",
@@ -105,7 +113,11 @@ export const styles = StyleSheet.create({
         padding: 3,
         paddingLeft: 5,
         paddingRight: 5,
-    }
+    },
+    imageGuesses:{ 
+        flex: 1, 
+        width: "auto", 
+    },
 })
 
 export default function Styles() {

@@ -18,7 +18,8 @@ type TextContent = {
 type TipContent = TextContent | ImageContent;
 
 type Props = TouchableOpacityProps & {
-    condition : boolean
+    numGuesses : number
+    maxGuesses : number
     content : TipContent
     title : string
     icon: keyof typeof MaterialIcons.glyphMap
@@ -29,11 +30,11 @@ type Props = TouchableOpacityProps & {
 
 
 
-export default function Tip({condition, content, title, icon, ...rest}:Props){
+export default function Tip({numGuesses, maxGuesses, content, title, icon, ...rest}:Props){
     const [toggle, setToggle] = useState(false);
 
     function handleToggle(){
-        if(condition){
+        if(numGuesses >= maxGuesses){
             setToggle(!toggle);
         }
     }
@@ -68,7 +69,7 @@ export default function Tip({condition, content, title, icon, ...rest}:Props){
         }
     }
 
-    const iconColor = condition ? colors.yellow[500] : colors.gray[500];
+    const iconColor = (numGuesses >= maxGuesses) ? colors.yellow[500] : colors.gray[500];
 
     return(
         <View style={styles.tipContainer}>
@@ -76,7 +77,7 @@ export default function Tip({condition, content, title, icon, ...rest}:Props){
             <TouchableOpacity 
                 style={styles.icon} 
                 onPress={handleToggle}
-                activeOpacity={condition ? 0.7 : 1}
+                activeOpacity={(numGuesses >= maxGuesses) ? 0.7 : 1}
                 {...rest}
             >
                 <MaterialIcons name={icon} size={30} color={iconColor}/>
@@ -88,8 +89,18 @@ export default function Tip({condition, content, title, icon, ...rest}:Props){
                 - pode clicar, mas não aparece a dica, senão pode clicar e aparece a dica
             */}
             <View style={styles.tipContentWrapper}>
-                {(condition && toggle) ? renderContent() : (
-                    <View></View>
+                { ((numGuesses >= maxGuesses) && toggle) ? 
+                renderContent() 
+                : ( ( !(numGuesses >= maxGuesses) &&
+                        <View style={{width:"70%"}}>
+                            <Text 
+                                numberOfLines={3}
+                                adjustsFontSizeToFit
+                                style={styles.guessesLeft}>
+                                    {maxGuesses-numGuesses} guesses left
+                            </Text>
+                        </View>
+                    )
                 )}
             </View>
         </View>

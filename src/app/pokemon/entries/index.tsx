@@ -1,12 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from 'expo-router';
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, FlatList, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, Text, View } from "react-native";
 
 import { allPokemonNames } from "@/assets/texts/pokemonNames";
 import Button from "@/components/button";
 import DropdownInput from "@/components/dropdown";
-import PokedleRow from "@/components/pokedleGuess";
+import PokedleImageOnly from "@/components/pokedleImageOnly";
 import Tip from "@/components/tip";
 import WinModal from "@/components/winModal";
 import { compareGuessToDaily, RESULT } from "@/services/comparador";
@@ -112,19 +112,21 @@ export default function Entries(){
             </View>
 
             <View style={styles.entryContainer}>
-                <Text 
-                    style={styles.entry}
-                    numberOfLines={1}
-                    adjustsFontSizeToFit={true}
-                >
-                    {dailyPokemon.entry}
-                </Text>
-
+                <View style={styles.entryBorder}>
+                    <Text 
+                        style={styles.entry}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit={true}
+                    >
+                        {dailyPokemon.entry}
+                    </Text>
+                </View>
                 <View style={styles.tips}>
 
                     <Tip
                         title="Types"
-                        condition={true}
+                        numGuesses={nGuesses}
+                        maxGuesses={5}
                         content={{
                             type:"Image", 
                             data:[
@@ -136,7 +138,8 @@ export default function Entries(){
                     />
                     <Tip
                         title="Generations"
-                        condition={true}
+                        numGuesses={nGuesses}
+                        maxGuesses={10}
                         content={{type:"Text", data:dailyPokemon.generation}}
                         icon="pin"
                     />
@@ -164,40 +167,19 @@ export default function Entries(){
            
 
             
-            <ScrollView 
-                horizontal={true} 
-                showsHorizontalScrollIndicator={true}
-            >
-                <View>
-                    {guessList.length > 0 && 
-                    (
-                        <View style={styles.indexColumns}>
-                            <Text style={styles.indexText}>Pokémon</Text>
-                            <Text style={styles.indexText}>Type 1</Text>
-                            <Text style={styles.indexText}>Type 2</Text>
-                            <Text style={styles.indexText}>Habitat</Text>
-                            <Text style={styles.indexText}>Color</Text>
-                            <Text style={styles.indexText}>Rarity</Text>
-                            <Text style={styles.indexText}>Stage</Text>
-                            <Text style={styles.indexText}>Generation</Text>
-                            <Text style={styles.indexText}>Body</Text>
-                            <Text style={styles.indexText}>Height</Text>
-                            <Text style={styles.indexText}>Weight</Text>
-                        </View>
+            
+            <View style={styles.imageGuesses}>
+                <FlatList
+                    data={guessList}
+                    style={styles.row}
+                    ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
+                    keyExtractor={ (item) => `${item.id}` }
+                    renderItem={({item}) => (   
+                        <PokedleImageOnly pokemon={item} daily={dailyPokemon}/>
                     )}
-
-                    <FlatList
-                        data={guessList}
-                        style={styles.row} 
-                        keyExtractor={ (item, index) => `${item.id}-${index}` }
-                        renderItem={({ item, index }) => (   
-                            <PokedleRow pokemon={item} daily={dailyPokemon} comparison={resultList[index]}/>
-                        )}
-                        
-                    />
-
-                </View>
-            </ScrollView>
+                />
+            </View>
+                    
         </View>
     );
 }
