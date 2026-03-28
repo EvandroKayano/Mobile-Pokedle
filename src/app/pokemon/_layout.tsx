@@ -49,6 +49,13 @@ export default function Layout(){
                     }} 
                 />
 
+                <Stack.Screen 
+                    name="tcg/index" 
+                    options={{ 
+                        headerShown: false, 
+                        presentation: 'modal'
+                    }} 
+                />
                 
             </Stack>
         )

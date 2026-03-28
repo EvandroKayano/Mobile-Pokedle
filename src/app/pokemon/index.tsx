@@ -50,14 +50,24 @@ export default function Index(){
                 style={styles.cardJogo}
                 onPress={() => router.push("/pokemon/wtp/")}
             >
-                <MaterialIcons name="man" size={40} color="black" />
+                <MaterialIcons name="goat" size={40} color="black" />
                 <View style={{ marginLeft: 15 }}>
                     <Text style={styles.gameName}>Who's That Pokemon?</Text>
                     <Text style={styles.gameDesc}>Guess the strange shadow</Text>
                 </View>
             </TouchableOpacity>
 
-            
+            <TouchableOpacity 
+                style={styles.cardJogo}
+                onPress={() => router.push("/pokemon/tcg/")}
+            >
+                <MaterialIcons name="sensor-window" size={40} color="black" />
+                <View style={{ marginLeft: 15 }}>
+                    <Text style={styles.gameName}>Mysterious pokémon card</Text>
+                    <Text style={styles.gameDesc}>Guess the blurred card</Text>
+                </View>
+            </TouchableOpacity>
+
         </View>
     );
 }
