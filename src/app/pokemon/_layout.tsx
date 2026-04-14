@@ -1,12 +1,14 @@
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { ActivityIndicator, View } from "react-native";
-import { styles } from './styles';
+import { styles } from "./styles";
+
 
 export default function Layout(){
     const [fontsLoaded] = useFonts({
         "PokemonStyle" : require("@/assets/fonts/PokemonClassic.ttf")
-        })
+    })
+
     if(!fontsLoaded){
         return (
             <View style={styles.loadingLogo}>
@@ -22,6 +24,7 @@ export default function Layout(){
                     options={{ 
                         title: "Minigames",
                         headerShown: true,
+                        gestureEnabled: false,
                     }} 
                 />
                 
@@ -29,7 +32,7 @@ export default function Layout(){
                     name="guess/index" 
                     options={{ 
                         headerShown: false, 
-                        presentation: 'modal'
+                        presentation: "modal",
                     }} 
                 />
 
@@ -37,7 +40,8 @@ export default function Layout(){
                     name="entries/index" 
                     options={{ 
                         headerShown: false, 
-                        presentation: 'modal'
+                        presentation: "modal",
+                        animation: "fade_from_bottom",
                     }} 
                 />
 
@@ -45,7 +49,7 @@ export default function Layout(){
                     name="wtp/index" 
                     options={{ 
                         headerShown: false, 
-                        presentation: 'modal'
+                        presentation: "modal"
                     }} 
                 />
 
@@ -53,7 +57,7 @@ export default function Layout(){
                     name="tcg/index" 
                     options={{ 
                         headerShown: false, 
-                        presentation: 'modal'
+                        presentation: "modal"
                     }} 
                 />
                 

@@ -1,4 +1,4 @@
-import { PressableProps, ImageSourcePropType, Pressable, ImageBackground, Text } from "react-native";
+import { ImageBackground, ImageSourcePropType, Pressable, PressableProps, Text } from "react-native";
 import { styles } from "./styles";
 
 type Props = PressableProps & {

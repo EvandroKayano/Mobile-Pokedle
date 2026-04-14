@@ -8,7 +8,7 @@ export default function Layout(){
                 headerShown: false,
                 contentStyle:{
                     backgroundColor: colors.gray[400],
-                }
+                },
             }}
         >
             <Stack.Screen name="index"/>
